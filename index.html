@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // Utility functions
+        function savePlaybackTime(videoId, time) {
+          localStorage.setItem("playback_" + videoId, time);
+        }
+      
+        function getPlaybackTime(videoId) {
+          return parseFloat(localStorage.getItem("playback_" +videoId)) || 0;
+        }
+      
+        function clearPlaybackTime(videoId) {
+          localStorage.removeItem("playback_"+ videoId);
+        }
+      
+        // Video playback logic
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+        const src = urlParams.get('src');
+
+        const video = document.createElement('video')
+        video.setAttribute('id', id);
+        video.setAttribute('src', src);
+        video.setAttribute('autoplay','');
+        video.setAttribute('controls', '');
+        video.setAttribute('width', '640');
+        video.setAttribute('height', '360');
+
+        document.body.appendChild(video)
+
+        //const video = document.getElementById(id);
+        const videoId = video.id; // Unique video identifier
+      
+        // Restore playback position on load
+        const savedTime = getPlaybackTime(videoId);
+        if (savedTime > 0) {
+          video.currentTime = savedTime; // Resume from the saved time
+        }
+      
+        // Save playback position periodically
+        video.addEventListener('timeupdate', () => {
+          savePlaybackTime(videoId, video.currentTime);
+        });
+      
+        // Clear playback position when the video ends
+        video.addEventListener('ended', () => {
+          clearPlaybackTime(videoId);
+        });
+      </script>
+</body>
+
+</html>
