@@ -54,14 +54,20 @@
 
         // Create refresh button
         const refresh_url = `shortcuts://run-shortcut?name=Redbar&input=text&text=${id}`
-        const link = document.createElement('a');
-        link.appendChild(document.createTextNode('Refresh video'));
-        link.setAttribute('href', refresh_url);
+        const refresh_link = document.createElement('a');
+        refresh_link.appendChild(document.createTextNode('Refresh video'));
+        refresh_link.setAttribute('href', refresh_url);
 
+        const switch_episode_url = `shortcuts://run-shortcut?name=Redbar`
+        const switch_episode_link = document.createElement('a');
+        switch_episode_link.appendChild(document.createTextNode('Switch episode'));
+        switch_episode_link.setAttribute('href', switch_episode_url);
+        
         document.title = id;
         document.body.appendChild(heading);
         document.body.appendChild(video);
-        document.body.appendChild(link);
+        document.body.appendChild(refresh_link);
+        document.body.appendChild(switch_episode_link);
 
         //const video = document.getElementById(id);
         const videoId = video.id; // Unique video identifier
