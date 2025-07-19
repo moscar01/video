@@ -50,14 +50,13 @@
         // Create refresh button
         //const url = `shortcuts://run-shortcut?name=Redbar&input=text&text=${id}`
         const url = 'https://google.com'
-        const refreshLink = document.createElement('a');
-        refreshLink.innerText = 'Refresh video';
-        refreshLink.setAttribute('href', url);
+        const link = document.createElement('h1');
+        heading.appendChild(document.createTextNode('Link'));
 
         document.title = id;
         document.body.appendChild(heading);
         docoment.body.appendChild(refreshLink);
-        document.body.appendChild(video);
+        document.body.appendChild(link);
 
         //const video = document.getElementById(id);
         const videoId = video.id; // Unique video identifier
