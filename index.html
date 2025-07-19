@@ -27,7 +27,12 @@
         const id = urlParams.get('id');
         const src = urlParams.get('src');
 
-        const video = document.createElement('video')
+        //Set title
+        const heading = docuemnt.createElement('h1');
+        heading.appendChild(document.createTextNode(id));
+        
+        // Create video player
+        const video = document.createElement('video');
         video.setAttribute('id', id);
         video.setAttribute('src', src);
         video.setAttribute('autoplay','');
@@ -35,7 +40,8 @@
         video.setAttribute('width', '640');
         video.setAttribute('height', '360');
 
-        document.body.appendChild(video)
+        document.body.appendChild(heading);
+        document.body.appendChild(video);
 
         //const video = document.getElementById(id);
         const videoId = video.id; // Unique video identifier
