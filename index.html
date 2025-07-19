@@ -47,6 +47,12 @@
         video.setAttribute('width', '640');
         video.setAttribute('height', '360');
 
+        // Create refresh button
+        const url = `shortcuts://run-shortcut?name=Redbar&input=text&text=${id}`
+        const refreshLink = document.createElement('a');
+        refreshLink.appendChild(document.createTextNode('Refresh video'));
+        refreshLink.setAttribute('href', url);
+
         document.title = id;
         document.body.appendChild(heading);
         document.body.appendChild(video);
