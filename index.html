@@ -108,7 +108,7 @@
           clearPlaybackTime(videoId);
         });
 
-        share_url_link.addEventListener('click' (e) => {
+        share_url_link.addEventListener('click', (e) => {
             e.preventDefault();
             const time = getPlaybackTime(videoId);
             const share_url = `shortcuts://run-shortcut?name=Redbar&input=text&text=${id},${time}`;
