@@ -38,6 +38,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const id = urlParams.get('id');
         const src = urlParams.get('src');
+        const time = urlParams.get('time');
 
         //Set title
         const heading = document.createElement('h1');
@@ -57,24 +58,36 @@
         const refresh_link = document.createElement('a');
         refresh_link.appendChild(document.createTextNode('Refresh video'));
         refresh_link.setAttribute('href', refresh_url);
-
+        
+        // Switch episode button
         const switch_episode_url = `shortcuts://run-shortcut?name=Redbar`
         const switch_episode_link = document.createElement('a');
         switch_episode_link.appendChild(document.createTextNode('Switch episode'));
         switch_episode_link.setAttribute('href', switch_episode_url);
+
+        // Send playback to another device
+        const share_url = `shortcuts://run-shortcut?name=Redbar&input=text&text=${id},${60}`;
+        const share_url_link = document.createElement('a');
+        share_url_link.appendChild(document.createTextNode('Share episode'));
+        share_url_link.setAttribute('href', switch_episode_url);
         
         document.title = id;
         document.body.appendChild(heading);
         document.body.appendChild(video);
         document.body.appendChild(refresh_link);
         document.body.appendChild(switch_episode_link);
+        
 
         //const video = document.getElementById(id);
         const videoId = video.id; // Unique video identifier
       
         // Restore playback position on load
         const savedTime = getPlaybackTime(videoId);
-        if (savedTime > 0) {
+        if (time > 0) {
+          video.currentTime = time; // Resume from url-parameter time
+          const newParams = newURLSearchParams({id: id, src: src});
+          window.history.pushState({}, "", "?" + newParams.toString());
+         } else if (savedTime > 0) {
           video.currentTime = savedTime; // Resume from the saved time
         }
       
