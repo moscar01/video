@@ -90,7 +90,7 @@
         const savedTime = getPlaybackTime(videoId);
         if (time > 0) {
           video.currentTime = time; // Resume from url-parameter time
-          const newParams = newURLSearchParams({id: id, src: src});
+          const newParams = new URLSearchParams({id: id, src: src});
           window.onload = function () {
             window.history.replaceState({}, "", "?" + newParams.toString());    
           };
