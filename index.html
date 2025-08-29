@@ -66,10 +66,14 @@
         switch_episode_link.setAttribute('href', switch_episode_url);
 
         // Send playback to another device
-        const share_url = `shortcuts://run-shortcut?name=Redbar&input=text&text=${id},${60}`;
+        
         const share_url_link = document.createElement('a');
         share_url_link.appendChild(document.createTextNode('Share episode'));
-        share_url_link.setAttribute('href', share_url);
+        //share_url_link.setAttribute('href', share_url);
+        
+
+
+        
         
         document.title = id;
         document.body.appendChild(heading);
@@ -87,7 +91,9 @@
         if (time > 0) {
           video.currentTime = time; // Resume from url-parameter time
           const newParams = newURLSearchParams({id: id, src: src});
-          window.history.replaceState({}, "", "?" + newParams.toString());
+          window.onload = function () {
+            window.history.replaceState({}, "", "?" + newParams.toString());    
+          };
          } else if (savedTime > 0) {
           video.currentTime = savedTime; // Resume from the saved time
         }
@@ -100,6 +106,13 @@
         // Clear playback position when the video ends
         video.addEventListener('ended', () => {
           clearPlaybackTime(videoId);
+        });
+
+        share_url_link.addEventListener('click' (e) => {
+            e.preventDefault();
+            const time = getPlaybackTime(videoId);
+            const share_url = `shortcuts://run-shortcut?name=Redbar&input=text&text=${id},${time}`;
+            window.location = share_url;
         });
       </script>
 </body>
