@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
     <style>
         body {
             background: black;
@@ -47,12 +48,20 @@
         // Create video player
         const video = document.createElement('video');
         video.setAttribute('id', id);
-        video.setAttribute('src', src);
+        //video.setAttribute('src', src);
         video.setAttribute('autoplay','');
         video.setAttribute('controls', '');
         video.setAttribute('width', '640');
         video.setAttribute('height', '360');
 
+        if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = src;
+        } else if (Hls.isSupported()) {
+          var hls = new Hls();
+          hls.loadSource(src);
+          hls.attachMedia(video);
+        }
+          
         // Create refresh button
         const refresh_url = `shortcuts://run-shortcut?name=Redbar&input=text&text=${id}`
         const refresh_link = document.createElement('a');
@@ -66,14 +75,8 @@
         switch_episode_link.setAttribute('href', switch_episode_url);
 
         // Send playback to another device
-        
         const share_url_link = document.createElement('a');
         share_url_link.appendChild(document.createTextNode('Share episode'));
-        //share_url_link.setAttribute('href', share_url);
-        
-
-
-        
         
         document.title = id;
         document.body.appendChild(heading);
@@ -82,8 +85,6 @@
         document.body.appendChild(switch_episode_link);
         document.body.appendChild(share_url_link);
         
-
-        //const video = document.getElementById(id);
         const videoId = video.id; // Unique video identifier
       
         // Restore playback position on load
