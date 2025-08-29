@@ -87,7 +87,7 @@
         if (time > 0) {
           video.currentTime = time; // Resume from url-parameter time
           const newParams = newURLSearchParams({id: id, src: src});
-          window.history.pushState({}, "", "?" + newParams.toString());
+          window.history.replaceState({}, "", "?" + newParams.toString());
          } else if (savedTime > 0) {
           video.currentTime = savedTime; // Resume from the saved time
         }
